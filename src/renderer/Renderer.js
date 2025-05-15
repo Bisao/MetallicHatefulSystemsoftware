@@ -1,3 +1,4 @@
+
 export class Renderer {
   constructor(canvas, tileSize) {
     this.canvas = canvas;
@@ -20,7 +21,7 @@ export class Renderer {
     this.ctx.lineTo(offsetX + iso.x, offsetY + iso.y + this.tileSize);
     this.ctx.lineTo(offsetX + iso.x - this.tileSize, offsetY + iso.y + this.tileSize / 2);
     this.ctx.closePath();
-
+    
     if (isOccupied) {
       this.ctx.fillStyle = '#ffcccc';
     } else if (isHovered) {
@@ -28,7 +29,7 @@ export class Renderer {
     } else {
       this.ctx.fillStyle = '#eee';
     }
-
+    
     this.ctx.fill();
     this.ctx.strokeStyle = '#000';
     this.ctx.stroke();
@@ -38,15 +39,15 @@ export class Renderer {
     const iso = this.toIsometric(x, y);
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
-
+    
     const img = new Image();
     img.src = building.image;
     img.onload = () => {
       requestAnimationFrame(() => {
         this.ctx.drawImage(
           img,
-          offsetX + iso.x - this.tileSize/2,
-          offsetY + iso.y - this.tileSize/2,
+          offsetX + iso.x - this.tileSize,
+          offsetY + iso.y - this.tileSize,
           this.tileSize * 2,
           this.tileSize * 2
         );
@@ -58,7 +59,7 @@ export class Renderer {
     const iso = this.toIsometric(x, y);
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
-
+    
     this.ctx.globalAlpha = 0.5;
     const img = new Image();
     img.src = imageUrl;
@@ -67,8 +68,8 @@ export class Renderer {
       requestAnimationFrame(() => {
         this.ctx.drawImage(
           img,
-          offsetX + iso.x - this.tileSize/2,
-          offsetY + iso.y - this.tileSize/2,
+          offsetX + iso.x - this.tileSize,
+          offsetY + iso.y - this.tileSize,
           this.tileSize * 2,
           this.tileSize * 2
         );
@@ -81,21 +82,17 @@ export class Renderer {
   getTileFromScreen(screenX, screenY) {
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
-
+    
     // Convert screen to local coordinates
     const x = screenX - offsetX;
     const y = screenY - offsetY;
-
-    // Convert isometric to cartesian coordinates without rounding
-    const tileX = (x / this.tileSize + y / (this.tileSize / 2)) / 2;
-    const tileY = (y / (this.tileSize / 2) - x / this.tileSize) / 2;
-
-    // Get the exact tile
-    const exactX = Math.floor(tileX);
-    const exactY = Math.floor(tileY);
-
-    if (exactX >= 0 && exactX < 10 && exactY >= 0 && exactY < 10) {
-      return { x: exactX, y: exactY };
+    
+    // Convert isometric to cartesian coordinates
+    const tileX = Math.round((x / this.tileSize + y / (this.tileSize / 2)) / 2);
+    const tileY = Math.round((y / (this.tileSize / 2) - x / this.tileSize) / 2);
+    
+    if (tileX >= 0 && tileX < 10 && tileY >= 0 && tileY < 10) {
+      return { x: tileX, y: tileY };
     }
     return null;
   }
