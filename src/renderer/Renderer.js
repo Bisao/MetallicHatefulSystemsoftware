@@ -43,13 +43,15 @@ export class Renderer {
     const img = new Image();
     img.src = building.image;
     img.onload = () => {
-      this.ctx.drawImage(
-        img,
-        offsetX + iso.x - this.tileSize,
-        offsetY + iso.y - this.tileSize,
-        this.tileSize * 2,
-        this.tileSize * 2
-      );
+      requestAnimationFrame(() => {
+        this.ctx.drawImage(
+          img,
+          offsetX + iso.x - this.tileSize,
+          offsetY + iso.y - this.tileSize,
+          this.tileSize * 2,
+          this.tileSize * 2
+        );
+      });
     };
   }
 
@@ -61,16 +63,20 @@ export class Renderer {
     this.ctx.globalAlpha = 0.5;
     const img = new Image();
     img.src = imageUrl;
+    this.ctx.save();
     img.onload = () => {
-      this.ctx.drawImage(
-        img,
-        offsetX + iso.x - this.tileSize,
-        offsetY + iso.y - this.tileSize,
-        this.tileSize * 2,
-        this.tileSize * 2
-      );
+      requestAnimationFrame(() => {
+        this.ctx.drawImage(
+          img,
+          offsetX + iso.x - this.tileSize,
+          offsetY + iso.y - this.tileSize,
+          this.tileSize * 2,
+          this.tileSize * 2
+        );
+        this.ctx.restore();
+        this.ctx.globalAlpha = 1.0;
+      });
     };
-    this.ctx.globalAlpha = 1.0;
   }
 
   getTileFromScreen(screenX, screenY) {
