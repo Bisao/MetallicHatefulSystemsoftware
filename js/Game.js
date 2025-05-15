@@ -54,6 +54,29 @@ export class Game {
       const y = e.clientY - rect.top;
       this.scene.handleClick(x, y);
     });
+
+    const buildButton = document.getElementById('buildButton');
+    const buildPanel = document.getElementById('buildPanel');
+    
+    buildButton.addEventListener('click', () => {
+      buildPanel.style.display = buildPanel.style.display === 'grid' ? 'none' : 'grid';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!buildPanel.contains(e.target) && e.target !== buildButton) {
+        buildPanel.style.display = 'none';
+      }
+    });
+
+    const buildingItems = document.querySelectorAll('.building-item');
+    buildingItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const buildingType = item.dataset.building;
+        console.log('Selected building:', buildingType);
+        // Aqui você pode implementar a lógica para colocar a estrutura no grid
+        buildPanel.style.display = 'none';
+      });
+    });
   }
 
   handleResize() {

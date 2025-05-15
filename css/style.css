@@ -19,6 +19,63 @@ body {
   backdrop-filter: blur(10px);
 }
 
+#buildButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #4CAF50;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+#buildPanel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  z-index: 999;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.building-item {
+  width: 100px;
+  height: 100px;
+  background: #f5f5f5;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.building-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.building-item span {
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   #gameCanvas {
     width: 100%;
