@@ -22,16 +22,31 @@ export class Renderer {
     // Criar mapa de tiles consistente
     this.tileMap = Array(CONFIG.GRID.SIZE).fill().map(() => 
       Array(CONFIG.GRID.SIZE).fill().map(() => {
-        // Distribuição natural:
-        // 40% grama básica
-        // 35% grama variação 1
-        // 15% grama com 2 flores
-        // 10% grama com 3 flores
         const rand = Math.random();
-        if (rand < 0.4) return CONFIG.TILES.GRASS;
-        if (rand < 0.75) return CONFIG.TILES.GRASS_1;
-        if (rand < 0.9) return CONFIG.TILES.GRASS_2_FLOWERS;
-        return CONFIG.TILES.GRASS_3_FLOWERS;
+        // Distribuição natural:
+        // 60% grama (diferentes tipos)
+        // 30% árvores
+        // 10% troncos/tocos
+        if (rand < 0.6) {
+          // Distribuição da grama
+          const grassRand = Math.random();
+          if (grassRand < 0.4) return CONFIG.TILES.GRASS;
+          if (grassRand < 0.75) return CONFIG.TILES.GRASS_1;
+          if (grassRand < 0.9) return CONFIG.TILES.GRASS_2_FLOWERS;
+          return CONFIG.TILES.GRASS_3_FLOWERS;
+        } else if (rand < 0.9) {
+          // Distribuição das árvores
+          const treeRand = Math.random();
+          if (treeRand < 0.33) return CONFIG.TILES.TREE_1;
+          if (treeRand < 0.66) return CONFIG.TILES.TREE_2;
+          return CONFIG.TILES.TREE_3;
+        } else {
+          // Distribuição dos troncos/tocos
+          const stumpRand = Math.random();
+          if (stumpRand < 0.4) return CONFIG.TILES.STUMP_1;
+          if (stumpRand < 0.7) return CONFIG.TILES.STUMP_2;
+          return CONFIG.TILES.LOG;
+        }
       })
     );
   }
