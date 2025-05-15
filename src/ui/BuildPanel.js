@@ -19,7 +19,10 @@ export class BuildPanel {
     buildingItems.forEach(item => {
       item.addEventListener('click', () => {
         const buildingType = item.dataset.building;
-        console.log('Selected building:', buildingType);
+        const buildingImg = item.querySelector('img').src;
+        document.dispatchEvent(new CustomEvent('buildingSelected', {
+          detail: { type: buildingType, image: buildingImg }
+        }));
         this.hide();
       });
     });
