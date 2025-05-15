@@ -87,9 +87,14 @@ export class GameScene {
       }
     } else {
       // Verificar se clicou em um NPC
-      const npcs = this.grid.getNpcsAt(tile.x, tile.y);
-      if (npcs.length > 0) {
-        this.infoPanel.show(npcs[0]);
+      const clickedNpc = this.grid.npcs.find(npc => {
+        const dx = Math.abs(npc.x - tile.x);
+        const dy = Math.abs(npc.y - tile.y);
+        return dx < 0.5 && dy < 0.5;
+      });
+      
+      if (clickedNpc) {
+        this.infoPanel.show(clickedNpc);
         return;
       }
 
