@@ -41,7 +41,8 @@ export class GameScene {
         this.renderer.drawTile(x, y, {
           isOccupied,
           isHovered,
-          isValid: !isOccupied && isHovered && this.selectedBuilding
+          isValid: !isOccupied && isHovered && this.selectedBuilding,
+          decorationType: this.grid.decorations[y][x]
         });
 
         if (isOccupied) {
@@ -92,7 +93,7 @@ export class GameScene {
         const dy = Math.abs(npc.y - tile.y);
         return dx < 0.5 && dy < 0.5;
       });
-      
+
       if (clickedNpc) {
         this.infoPanel.show(clickedNpc);
         return;

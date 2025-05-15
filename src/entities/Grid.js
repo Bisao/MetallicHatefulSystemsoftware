@@ -3,6 +3,14 @@ export class Grid {
   constructor(size) {
     this.size = size;
     this.cells = Array(size).fill().map(() => Array(size).fill(0));
+    this.decorations = Array(size).fill().map(() => 
+      Array(size).fill().map(() => {
+        const rand = Math.random();
+        if (rand < 0.1) return 'trees';
+        if (rand < 0.15) return 'rocks';
+        return null;
+      })
+    );
     this.npcs = [];
   }
 
