@@ -41,7 +41,8 @@ export class GameScene {
         this.renderer.drawTile(x, y, {
           isOccupied,
           isHovered,
-          isValid: !isOccupied && isHovered && this.selectedBuilding
+          isValid: !isOccupied && isHovered && this.selectedBuilding,
+          decorationType: this.grid.decorations[y][x]
         });
 
         if (isOccupied) {

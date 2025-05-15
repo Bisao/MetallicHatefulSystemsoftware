@@ -1,10 +1,9 @@
 
 export class Renderer {
-  constructor(canvas, tileSize, grid) {
+  constructor(canvas, tileSize) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.tileSize = tileSize;
-    this.grid = grid;
     this.imageCache = new Map();
     this.loadingImages = new Set();
   }
@@ -46,40 +45,35 @@ export class Renderer {
     });
   }
 
-  async drawTile(x, y, { isOccupied, isHovered, isValid } = {}) {
+  async drawTile(x, y, { isOccupied, isHovered, isValid, decorationType = null } = {}) {
     const iso = this.toIsometric(x, y);
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
     
-    const tileType = this.grid.getTileType(x, y);
-    let imagePath;
+    // Tiles base
+    const tileImages = [
+      '/assets/tiles/Grass.png',
+      '/assets/tiles/Grass_1.png',
+      '/assets/tiles/Grass_2_Flowers.png',
+      '/assets/tiles/Grass_3_Flowers.png'
+    ];
     
-    if (tileType.type === 'trees') {
-      const treeImages = [
+    // Decorações
+    const decorations = {
+      trees: [
         '/attached_assets/trees/tree_autumn.png',
         '/attached_assets/trees/tree_fruit.png',
         '/attached_assets/trees/tree_pine.png',
         '/attached_assets/trees/tree_simple.png'
-      ];
-      imagePath = treeImages[tileType.variant];
-    } else if (tileType.type === 'rocks') {
-      const rockImages = [
+      ],
+      rocks: [
         '/attached_assets/rocks/2_rock.png',
         '/attached_assets/rocks/big_rock.png',
         '/attached_assets/rocks/small_rock.png'
-      ];
-      imagePath = rockImages[tileType.variant];
-    } else {
-      const grassImages = [
-        '/assets/tiles/Grass.png',
-        '/assets/tiles/Grass_1.png',
-        '/assets/tiles/Grass_2_Flowers.png',
-        '/assets/tiles/Grass_3_Flowers.png'
-      ];
-      imagePath = grassImages[tileType.variant];
-    }
+      ]
+    };
 
-    const tileImage = await this.loadImage(imagePath);
+    const tileImage = await this.loadImage(tileImages[Math.floor(Math.random() * tileImages.length)]);
 
     this.ctx.save();
     try {
@@ -92,7 +86,20 @@ export class Renderer {
         this.tileSize
       );
 
-      
+      // Renderiza decoração se existir
+      if (decorationType) {
+        const decorationList = decorations[decorationType];
+        if (decorationList) {
+          const decorationImage = await this.loadImage(decorationList[Math.floor(Math.random() * decorationList.length)]);
+          this.ctx.drawImage(
+            decorationImage,
+            offsetX + iso.x - this.tileSize,
+            offsetY + iso.y - this.tileSize,
+            this.tileSize * 2,
+            this.tileSize * 2
+          );
+        }
+      }
       
       // Adiciona highlight para hover e seleção
       if (isHovered || isOccupied) {
