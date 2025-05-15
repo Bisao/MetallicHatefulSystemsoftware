@@ -96,9 +96,9 @@ export class Renderer {
           this.ctx.drawImage(
             decorationImage,
             offsetX + iso.x - this.tileSize,
-            offsetY + iso.y - this.tileSize,
+            offsetY + iso.y - this.tileSize / 2,
             this.tileSize * 2,
-            this.tileSize * 2
+            this.tileSize
           );
         }
       }
