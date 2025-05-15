@@ -1,5 +1,6 @@
 import { BuildPanel } from '../ui/BuildPanel.js';
 import { Farmer, Fisherman, Lumberjack, Miner } from '../entities/Npc.js';
+import { InfoPanel } from '../ui/InfoPanel.js';
 
 export class GameScene {
   constructor(canvas, ctx, grid, renderer) {
@@ -11,11 +12,11 @@ export class GameScene {
     this.selectedBuilding = null;
     this.hoverTile = null;
     document.getElementById('buildButton').style.visibility = 'visible';
-    
+
     document.addEventListener('buildingSelected', (e) => {
       this.selectedBuilding = e.detail;
     });
-    
+
     this.canvas.addEventListener('mousemove', (e) => {
       const rect = this.canvas.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
@@ -35,17 +36,17 @@ export class GameScene {
         const isHovered = this.hoverTile && 
                          this.hoverTile.x === x && 
                          this.hoverTile.y === y;
-        
+
         this.renderer.drawTile(x, y, {
           isOccupied,
           isHovered,
           isValid: !isOccupied && isHovered && this.selectedBuilding
         });
-        
+
         if (isOccupied) {
           this.renderer.drawBuilding(x, y, this.grid.cells[y][x]);
         }
-        
+
         if (isHovered && this.selectedBuilding && !isOccupied) {
           this.renderer.drawBuildingPreview(x, y, this.selectedBuilding.image);
         }
@@ -60,13 +61,13 @@ export class GameScene {
 
   handleClick(x, y) {
     if (!this.selectedBuilding) return;
-    
+
     const tile = this.renderer.getTileFromScreen(x, y);
     if (!tile) return;
-    
+
     if (this.grid.cells[tile.y][tile.x] === 0) {
       this.grid.cells[tile.y][tile.x] = this.selectedBuilding;
-      
+
       // Criar NPC baseado no tipo de construção
       switch(this.selectedBuilding.type) {
         case 'FARMER_HOUSE':
@@ -82,7 +83,7 @@ export class GameScene {
           this.grid.addNpc(new Miner(tile.x, tile.y));
           break;
       }
-      
+
       this.selectedBuilding = null;
     }
   }
