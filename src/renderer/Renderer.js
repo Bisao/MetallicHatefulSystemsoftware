@@ -60,22 +60,19 @@ export class Renderer {
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
     
+    this.ctx.save();
     this.ctx.globalAlpha = 0.5;
     const img = new Image();
     img.src = imageUrl;
-    this.ctx.save();
     img.onload = () => {
-      requestAnimationFrame(() => {
-        this.ctx.drawImage(
-          img,
-          offsetX + iso.x - this.tileSize,
-          offsetY + iso.y - this.tileSize,
-          this.tileSize * 2,
-          this.tileSize * 2
-        );
-        this.ctx.restore();
-        this.ctx.globalAlpha = 1.0;
-      });
+      this.ctx.drawImage(
+        img,
+        offsetX + iso.x - this.tileSize/2,
+        offsetY + iso.y - this.tileSize/2,
+        this.tileSize * 2,
+        this.tileSize * 2
+      );
+      this.ctx.restore();
     };
   }
 
