@@ -49,6 +49,7 @@ export class Game {
       this.currentScene = this.gameScene;
     } else {
       this.currentScene = this.menuScene;
+      document.getElementById('buildButton').style.display = 'none';
     }
   }
 

@@ -7,6 +7,7 @@ export class GameScene {
     this.grid = grid;
     this.renderer = renderer;
     this.buildPanel = new BuildPanel();
+    document.getElementById('buildButton').style.display = 'block';
   }
 
   render() {
