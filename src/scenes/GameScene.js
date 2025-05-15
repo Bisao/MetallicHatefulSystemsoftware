@@ -71,16 +71,16 @@ export class GameScene {
         // Criar NPC baseado no tipo de construção
         switch(this.selectedBuilding.type) {
           case 'FARMER_HOUSE':
-            this.grid.addNpc(new Farmer(tile.x, tile.y));
+            this.grid.addNpc(new Farmer(tile.x, tile.y, 'FARMER', {x: tile.x, y: tile.y}));
             break;
           case 'FISHERMAN_HOUSE':
-            this.grid.addNpc(new Fisherman(tile.x, tile.y));
+            this.grid.addNpc(new Fisherman(tile.x, tile.y, 'FISHERMAN', {x: tile.x, y: tile.y}));
             break;
           case 'LUMBERJACK_HOUSE':
-            this.grid.addNpc(new Lumberjack(tile.x, tile.y));
+            this.grid.addNpc(new Lumberjack(tile.x, tile.y, 'LUMBERJACK', {x: tile.x, y: tile.y}));
             break;
           case 'MINER_HOUSE':
-            this.grid.addNpc(new Miner(tile.x, tile.y));
+            this.grid.addNpc(new Miner(tile.x, tile.y, 'MINER', {x: tile.x, y: tile.y}));
             break;
         }
         this.selectedBuilding = null;

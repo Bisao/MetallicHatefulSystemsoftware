@@ -30,8 +30,16 @@ export class InfoPanel {
             <span class="value">${entity.profession}</span>
           </div>
           <div class="info-row">
-            <span class="label">Posição:</span>
+            <span class="label">Posição Atual:</span>
             <span class="value">X: ${Math.floor(entity.x)}, Y: ${Math.floor(entity.y)}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Casa:</span>
+            <span class="value">X: ${entity.homeBuilding.x}, Y: ${entity.homeBuilding.y}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Estado:</span>
+            <span class="value">${entity.state}</span>
           </div>
         </div>
       `;
