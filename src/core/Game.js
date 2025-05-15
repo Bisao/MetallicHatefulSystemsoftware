@@ -5,15 +5,7 @@ import { CONFIG } from '../config/config.js';
 import { MenuScene } from '../scenes/MenuScene.js';
 import { GameScene } from '../scenes/GameScene.js';
 
-/**
- * Classe principal do jogo
- * @class Game
- */
 export class Game {
-  /**
-   * Inicializa o jogo e seus componentes
-   * @constructor
-   */
   constructor() {
     this.canvas = document.getElementById('gameCanvas');
     this.ctx = this.canvas.getContext('2d');
