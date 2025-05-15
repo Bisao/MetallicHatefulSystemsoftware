@@ -103,4 +103,37 @@ export class Renderer {
       y: (x + y) * this.tileSize / 2
     };
   }
+
+  drawNpc(npc) {
+    const iso = this.toIsometric(npc.x, npc.y);
+    const offsetX = this.canvas.width / 2;
+    const offsetY = 100;
+
+    this.ctx.beginPath();
+    this.ctx.arc(
+      offsetX + iso.x,
+      offsetY + iso.y,
+      15,
+      0,
+      Math.PI * 2
+    );
+    
+    switch(npc.type) {
+      case 'FARMER':
+        this.ctx.fillStyle = '#4CAF50';
+        break;
+      case 'FISHERMAN':
+        this.ctx.fillStyle = '#2196F3';
+        break;
+      case 'LUMBERJACK':
+        this.ctx.fillStyle = '#795548';
+        break;
+      case 'MINER':
+        this.ctx.fillStyle = '#607D8B';
+        break;
+    }
+    
+    this.ctx.fill();
+    this.ctx.stroke();
+  }
 }

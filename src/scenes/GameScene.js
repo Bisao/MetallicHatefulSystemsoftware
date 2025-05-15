@@ -25,6 +25,10 @@ export class GameScene {
   }
 
   render() {
+    // Update NPCs
+    this.grid.npcs.forEach(npc => npc.update());
+
+    // Draw tiles and buildings
     for(let y = 0; y < this.grid.size; y++) {
       for(let x = 0; x < this.grid.size; x++) {
         const isOccupied = this.grid.cells[y][x] !== 0;
@@ -47,6 +51,11 @@ export class GameScene {
         }
       }
     }
+
+    // Draw NPCs
+    this.grid.npcs.forEach(npc => {
+      this.renderer.drawNpc(npc);
+    });
   }
 
   handleClick(x, y) {

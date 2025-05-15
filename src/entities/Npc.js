@@ -6,11 +6,26 @@ export class Npc {
     this.type = type;
     this.profession = '';
     this.state = 'idle';
+    this.direction = Math.random() * Math.PI * 2;
+    this.speed = 0.02;
   }
 
   update() {
-    // Lógica de atualização básica do NPC
-    // Será expandida posteriormente
+    this.x += Math.cos(this.direction) * this.speed;
+    this.y += Math.sin(this.direction) * this.speed;
+
+    // Manter NPCs dentro dos limites
+    if (this.x < 0 || this.x > 9 || this.y < 0 || this.y > 9) {
+      this.direction += Math.PI;
+    }
+
+    // Mudar direção aleatoriamente
+    if (Math.random() < 0.02) {
+      this.direction += (Math.random() - 0.5) * Math.PI;
+    }
+
+    this.x = Math.max(0, Math.min(9, this.x));
+    this.y = Math.max(0, Math.min(9, this.y));
   }
 }
 
