@@ -10,7 +10,13 @@ export class Renderer {
       [CONFIG.TILES.GRASS]: this.loadImage('attached_assets/Grass.png'),
       [CONFIG.TILES.GRASS_1]: this.loadImage('attached_assets/Grass_1.png'),
       [CONFIG.TILES.GRASS_2_FLOWERS]: this.loadImage('attached_assets/Grass_2_Flowers.png'),
-      [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png')
+      [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png'),
+      [CONFIG.TILES.TREE_1]: this.loadImage('attached_assets/tree1.png'),
+      [CONFIG.TILES.TREE_2]: this.loadImage('attached_assets/tree2.png'),
+      [CONFIG.TILES.TREE_3]: this.loadImage('attached_assets/tree3.png'),
+      [CONFIG.TILES.STUMP_1]: this.loadImage('attached_assets/stump1.png'),
+      [CONFIG.TILES.STUMP_2]: this.loadImage('attached_assets/stump2.png'),
+      [CONFIG.TILES.LOG]: this.loadImage('attached_assets/log.png')
     };
     
     // Criar mapa de tiles consistente
