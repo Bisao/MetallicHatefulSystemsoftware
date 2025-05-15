@@ -45,10 +45,20 @@ export class Renderer {
     });
   }
 
-  async drawTile(x, y, { isOccupied, isHovered, isValid, decorationType = null } = {}) {
+  getOffsets() {
+    return {
+      x: this.canvas.width / 2,
+      y: 100
+    };
+  }
+
+  async drawTile(x, y, { isOccupied, isHovered, isValid } = {}) {
+    if (!this.grid || !this.grid.isValidPosition(x, y)) return;
+
     const iso = this.toIsometric(x, y);
-    const offsetX = this.canvas.width / 2;
-    const offsetY = 100;
+    const { x: offsetX, y: offsetY } = this.getOffsets();
+    const tileType = this.grid.getTileType(x, y);
+    const decoration = this.grid.getDecoration(x, y);
     
     // Tiles base
     const tileImages = [

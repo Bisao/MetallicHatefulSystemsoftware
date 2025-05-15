@@ -61,9 +61,47 @@ export class GameScene {
     });
   }
 
+  constructor(canvas, ctx, grid, renderer) {
+    this.canvas = canvas;
+    this.ctx = ctx;
+    this.grid = grid;
+    this.renderer = renderer;
+    this.buildPanel = new BuildPanel();
+    this.infoPanel = new InfoPanel();
+    this.state = {
+      selectedBuilding: null,
+      hoverTile: null,
+      lastUpdate: Date.now()
+    };
+    
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    document.addEventListener('buildingSelected', (e) => {
+      this.state.selectedBuilding = e.detail;
+    });
+
+    this.canvas.addEventListener('mousemove', (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      this.state.hoverTile = this.renderer.getTileFromScreen(mouseX, mouseY);
+    });
+  }
+
+  update() {
+    const now = Date.now();
+    const deltaTime = (now - this.state.lastUpdate) / 1000;
+    this.state.lastUpdate = now;
+
+    // Update NPCs with deltaTime
+    this.grid.npcs.forEach(npc => npc.update(deltaTime));
+  }
+
   handleClick(x, y) {
     const tile = this.renderer.getTileFromScreen(x, y);
-    if (!tile) return;
+    if (!tile || !this.grid.isValidPosition(tile.x, tile.y)) return;
 
     if (this.selectedBuilding) {
       if (this.grid.cells[tile.y][tile.x] === 0) {
