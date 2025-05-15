@@ -54,10 +54,10 @@ export class Renderer {
     if (img.complete) {
       this.ctx.drawImage(
         img,
-        offsetX + iso.x - this.tileSize,
-        offsetY + iso.y - this.tileSize/2,
-        this.tileSize * 2,
-        this.tileSize * 2
+        offsetX + iso.x - this.tileSize/2,
+        offsetY + iso.y - this.tileSize/4,
+        this.tileSize,
+        this.tileSize
       );
     }
   }
