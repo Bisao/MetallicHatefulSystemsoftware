@@ -1,3 +1,4 @@
+import { BuildPanel } from '../ui/BuildPanel.js';
 
 export class GameScene {
   constructor(canvas, ctx, grid, renderer) {
@@ -5,32 +6,7 @@ export class GameScene {
     this.ctx = ctx;
     this.grid = grid;
     this.renderer = renderer;
-    this.buildButton = document.getElementById('buildButton');
-    this.buildPanel = document.getElementById('buildPanel');
-    this.setupBuildSystem();
-  }
-
-  setupBuildSystem() {
-    this.buildButton.style.display = 'block';
-    
-    this.buildButton.addEventListener('click', () => {
-      this.buildPanel.style.display = this.buildPanel.style.display === 'grid' ? 'none' : 'grid';
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!this.buildPanel.contains(e.target) && e.target !== this.buildButton) {
-        this.buildPanel.style.display = 'none';
-      }
-    });
-
-    const buildingItems = document.querySelectorAll('.building-item');
-    buildingItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const buildingType = item.dataset.building;
-        console.log('Selected building:', buildingType);
-        this.buildPanel.style.display = 'none';
-      });
-    });
+    this.buildPanel = new BuildPanel();
   }
 
   render() {
