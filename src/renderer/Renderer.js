@@ -45,37 +45,40 @@ export class Renderer {
     });
   }
 
-  async drawTile(x, y, { isOccupied, isHovered, isValid, decorationType = null } = {}) {
+  async drawTile(x, y, { isOccupied, isHovered, isValid } = {}) {
     const iso = this.toIsometric(x, y);
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
     
-    // Tiles base
-    const tileImages = [
-      '/assets/tiles/Grass.png',
-      '/assets/tiles/Grass_1.png',
-      '/assets/tiles/Grass_2_Flowers.png',
-      '/assets/tiles/Grass_3_Flowers.png'
-    ];
+    const tileType = this.grid.getTileType(x, y);
+    let imagePath;
     
-    // Decorações
-    const decorations = {
-      trees: [
+    if (tileType.type === 'trees') {
+      const treeImages = [
         '/attached_assets/trees/tree_autumn.png',
         '/attached_assets/trees/tree_fruit.png',
         '/attached_assets/trees/tree_pine.png',
         '/attached_assets/trees/tree_simple.png'
-      ],
-      rocks: [
+      ];
+      imagePath = treeImages[tileType.variant];
+    } else if (tileType.type === 'rocks') {
+      const rockImages = [
         '/attached_assets/rocks/2_rock.png',
         '/attached_assets/rocks/big_rock.png',
         '/attached_assets/rocks/small_rock.png'
-      ]
-    };
+      ];
+      imagePath = rockImages[tileType.variant];
+    } else {
+      const grassImages = [
+        '/assets/tiles/Grass.png',
+        '/assets/tiles/Grass_1.png',
+        '/assets/tiles/Grass_2_Flowers.png',
+        '/assets/tiles/Grass_3_Flowers.png'
+      ];
+      imagePath = grassImages[tileType.variant];
+    }
 
-    // Usar hash da posição para garantir mesmo tile
-    const hash = (x * 12345 + y * 67890) % tileImages.length;
-    const tileImage = await this.loadImage(tileImages[hash]);
+    const tileImage = await this.loadImage(imagePath);
 
     this.ctx.save();
     try {
