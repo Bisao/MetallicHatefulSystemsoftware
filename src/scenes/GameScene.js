@@ -1,5 +1,4 @@
 import { BuildPanel } from '../ui/BuildPanel.js';
-import { InfoPanel } from '../ui/InfoPanel.js';
 import { Farmer, Fisherman, Lumberjack, Miner } from '../entities/Npc.js';
 
 export class GameScene {
@@ -9,7 +8,6 @@ export class GameScene {
     this.grid = grid;
     this.renderer = renderer;
     this.buildPanel = new BuildPanel();
-    this.infoPanel = new InfoPanel();
     this.selectedBuilding = null;
     this.hoverTile = null;
     document.getElementById('buildButton').style.visibility = 'visible';
@@ -61,24 +59,10 @@ export class GameScene {
   }
 
   handleClick(x, y) {
+    if (!this.selectedBuilding) return;
+    
     const tile = this.renderer.getTileFromScreen(x, y);
     if (!tile) return;
-
-    if (!this.selectedBuilding) {
-      // Verificar se clicou em um NPC
-      const npcs = this.grid.getNpcsAt(tile.x, tile.y);
-      if (npcs.length > 0) {
-        this.infoPanel.show(npcs[0]);
-        return;
-      }
-      
-      // Verificar se clicou em uma construção
-      if (this.grid.cells[tile.y][tile.x] !== 0) {
-        this.infoPanel.show(this.grid.cells[tile.y][tile.x]);
-        return;
-      }
-      return;
-    }
     
     if (this.grid.cells[tile.y][tile.x] === 0) {
       this.grid.cells[tile.y][tile.x] = this.selectedBuilding;
