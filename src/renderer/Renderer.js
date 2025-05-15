@@ -92,20 +92,7 @@ export class Renderer {
         this.tileSize
       );
 
-      // Renderiza decoração se existir
-      if (decorationType) {
-        const decorationList = decorations[decorationType];
-        if (decorationList) {
-          const decorationImage = await this.loadImage(decorationList[Math.floor(Math.random() * decorationList.length)]);
-          this.ctx.drawImage(
-            decorationImage,
-            offsetX + iso.x - this.tileSize,
-            offsetY + iso.y - this.tileSize / 2,
-            this.tileSize * 2,
-            this.tileSize
-          );
-        }
-      }
+      
       
       // Adiciona highlight para hover e seleção
       if (isHovered || isOccupied) {
