@@ -45,31 +45,44 @@ export class Renderer {
     });
   }
 
-  drawTile(x, y, { isOccupied, isHovered, isValid } = {}) {
+  async drawTile(x, y, { isOccupied, isHovered, isValid } = {}) {
     const iso = this.toIsometric(x, y);
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
+    
+    // Escolhe aleatoriamente um dos tiles disponíveis
+    const tileImages = [
+      '/assets/tiles/Grass.png',
+      '/assets/tiles/Grass_1.png',
+      '/assets/tiles/Grass_2_Flowers.png',
+      '/assets/tiles/Grass_3_Flowers.png'
+    ];
+    
+    const tileImage = await this.loadImage(tileImages[Math.floor(Math.random() * tileImages.length)]);
 
     this.ctx.save();
     try {
-      this.ctx.beginPath();
-      this.ctx.moveTo(offsetX + iso.x, offsetY + iso.y);
-      this.ctx.lineTo(offsetX + iso.x + this.tileSize, offsetY + iso.y + this.tileSize / 2);
-      this.ctx.lineTo(offsetX + iso.x, offsetY + iso.y + this.tileSize);
-      this.ctx.lineTo(offsetX + iso.x - this.tileSize, offsetY + iso.y + this.tileSize / 2);
-      this.ctx.closePath();
+      // Desenha o tile base
+      this.ctx.drawImage(
+        tileImage,
+        offsetX + iso.x - this.tileSize,
+        offsetY + iso.y - this.tileSize / 2,
+        this.tileSize * 2,
+        this.tileSize
+      );
       
-      if (isOccupied) {
-        this.ctx.fillStyle = '#ffcccc';
-      } else if (isHovered) {
-        this.ctx.fillStyle = isValid ? '#ccffcc' : '#ffcccc';
-      } else {
-        this.ctx.fillStyle = '#eee';
+      // Adiciona highlight para hover e seleção
+      if (isHovered || isOccupied) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(offsetX + iso.x, offsetY + iso.y);
+        this.ctx.lineTo(offsetX + iso.x + this.tileSize, offsetY + iso.y + this.tileSize / 2);
+        this.ctx.lineTo(offsetX + iso.x, offsetY + iso.y + this.tileSize);
+        this.ctx.lineTo(offsetX + iso.x - this.tileSize, offsetY + iso.y + this.tileSize / 2);
+        this.ctx.closePath();
+        
+        this.ctx.fillStyle = isOccupied ? 'rgba(255,0,0,0.2)' : (isValid ? 'rgba(0,255,0,0.2)' : 'rgba(255,0,0,0.2)');
+        this.ctx.fill();
       }
-      
-      this.ctx.fill();
-      this.ctx.strokeStyle = '#000';
-      this.ctx.stroke();
     } finally {
       this.ctx.restore();
     }
