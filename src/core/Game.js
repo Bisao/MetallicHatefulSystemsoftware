@@ -12,7 +12,7 @@ export class Game {
     this.setupCanvas();
 
     this.grid = new Grid(CONFIG.GRID.SIZE);
-    this.renderer = new Renderer(this.canvas, CONFIG.GRID.TILE_SIZE);
+    this.renderer = new Renderer(this.canvas, CONFIG.GRID.TILE_SIZE, this.grid);
     this.menuScene = new MenuScene(this.canvas, this.ctx);
     this.gameScene = new GameScene(this.canvas, this.ctx, this.grid, this.renderer);
     this.currentScene = this.menuScene;

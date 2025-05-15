@@ -1,9 +1,10 @@
 
 export class Renderer {
-  constructor(canvas, tileSize) {
+  constructor(canvas, tileSize, grid) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.tileSize = tileSize;
+    this.grid = grid;
     this.imageCache = new Map();
     this.loadingImages = new Set();
   }
