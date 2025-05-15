@@ -10,7 +10,14 @@ export class Renderer {
       [CONFIG.TILES.GRASS]: this.loadImage('attached_assets/Grass.png'),
       [CONFIG.TILES.GRASS_1]: this.loadImage('attached_assets/Grass_1.png'),
       [CONFIG.TILES.GRASS_2_FLOWERS]: this.loadImage('attached_assets/Grass_2_Flowers.png'),
-      [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png')
+      [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png'),
+      [CONFIG.TILES.FARMER_HOUSE]: this.loadImage('attached_assets/buildings/FarmerHouse.png'),
+      [CONFIG.TILES.FISHERMAN_HOUSE]: this.loadImage('attached_assets/buildings/FishermanHouse.png'),
+      [CONFIG.TILES.LUMBERJACK_HOUSE]: this.loadImage('attached_assets/buildings/LumberJackHouse.png'),
+      [CONFIG.TILES.MINER_HOUSE]: this.loadImage('attached_assets/buildings/MinerHouse.png'),
+      [CONFIG.TILES.SILO]: this.loadImage('attached_assets/buildings/Silo.png'),
+      [CONFIG.TILES.WATER_WELL]: this.loadImage('attached_assets/buildings/WaterWell.png'),
+      [CONFIG.TILES.WINDMILL]: this.loadImage('attached_assets/buildings/Windmill.png')
     };
     
     // Criar mapa de tiles consistente

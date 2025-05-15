@@ -13,11 +13,12 @@ export const CONFIG = {
     GRASS_1: 1,
     GRASS_2_FLOWERS: 2,
     GRASS_3_FLOWERS: 3,
-    TREE_1: 4,
-    TREE_2: 5,
-    TREE_3: 6,
-    STUMP_1: 7,
-    STUMP_2: 8,
-    LOG: 9
+    FARMER_HOUSE: 4,
+    FISHERMAN_HOUSE: 5,
+    LUMBERJACK_HOUSE: 6,
+    MINER_HOUSE: 7,
+    SILO: 8,
+    WATER_WELL: 9,
+    WINDMILL: 10
   }
 };
