@@ -86,12 +86,16 @@ export class Renderer {
     const x = screenX - offsetX;
     const y = screenY - offsetY;
 
-    // Convert isometric to cartesian coordinates
-    const tileX = Math.round((x / this.tileSize + y / (this.tileSize / 2)) / 2);
-    const tileY = Math.round((y / (this.tileSize / 2) - x / this.tileSize) / 2);
+    // Convert isometric to cartesian coordinates without rounding
+    const tileX = (x / this.tileSize + y / (this.tileSize / 2)) / 2;
+    const tileY = (y / (this.tileSize / 2) - x / this.tileSize) / 2;
 
-    if (tileX >= 0 && tileX < 10 && tileY >= 0 && tileY < 10) {
-      return { x: tileX, y: tileY };
+    // Get the exact tile
+    const exactX = Math.floor(tileX);
+    const exactY = Math.floor(tileY);
+
+    if (exactX >= 0 && exactX < 10 && exactY >= 0 && exactY < 10) {
+      return { x: exactX, y: exactY };
     }
     return null;
   }
