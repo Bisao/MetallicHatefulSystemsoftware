@@ -1,4 +1,6 @@
 
+import { CONFIG } from './config.js';
+
 export class Renderer {
   constructor(canvas, tileSize) {
     this.canvas = canvas;
