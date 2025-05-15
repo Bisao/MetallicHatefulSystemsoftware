@@ -27,7 +27,7 @@ export class MenuScene {
       width: buttonWidth,
       height: buttonHeight,
       text: 'Settings',
-      onClick: () => console.log('Settings clicked')
+      onClick: () => alert('Settings em desenvolvimento')
     });
   }
 
