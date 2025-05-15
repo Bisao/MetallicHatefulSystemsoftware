@@ -1,15 +1,16 @@
-
 export class InfoPanel {
   constructor() {
     this.panel = document.createElement('div');
     this.panel.className = 'info-panel';
     this.panel.style.display = 'none';
+    this.panel.style.zIndex = '1000';
     document.body.appendChild(this.panel);
 
     // Fechar ao clicar fora do painel
-    document.addEventListener('click', (e) => {
+    document.addEventListener('mousedown', (e) => {
       if (this.panel.style.display === 'block' && 
-          !this.panel.contains(e.target)) {
+          !this.panel.contains(e.target) &&
+          !e.target.closest('#gameCanvas')) {
         this.hide();
       }
     });
@@ -17,32 +18,20 @@ export class InfoPanel {
 
   show(entity) {
     let content = '';
-    
+
     if (entity.profession) { // É um NPC
       content = `
         <div class="info-header">
-          <h2>👤 ${entity.profession.name}</h2>
+          <h2>👤 ${entity.profession}</h2>
         </div>
         <div class="info-content">
           <div class="info-row">
             <span class="label">Profissão:</span>
-            <span class="value">${entity.profession.name}</span>
+            <span class="value">${entity.profession}</span>
           </div>
           <div class="info-row">
-            <span class="label">Raio de trabalho:</span>
-            <span class="value">${entity.profession.workRadius}</span>
-          </div>
-          <div class="info-section">
-            <h3>Habilidades:</h3>
-            <div class="skills-grid">
-              ${Object.entries(entity.profession.skills)
-                .map(([skill, level]) => `
-                  <div class="skill-item">
-                    <span class="skill-name">${skill}</span>
-                    <span class="skill-level">Nível ${level}</span>
-                  </div>
-                `).join('')}
-            </div>
+            <span class="label">Posição:</span>
+            <span class="value">X: ${Math.floor(entity.x)}, Y: ${Math.floor(entity.y)}</span>
           </div>
         </div>
       `;
@@ -54,10 +43,6 @@ export class InfoPanel {
         <div class="info-content">
           <div class="info-row">
             <span class="label">Tipo:</span>
-            <span class="value">Construção</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Função:</span>
             <span class="value">${entity.type.split('_')[0]}</span>
           </div>
         </div>
