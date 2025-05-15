@@ -1,4 +1,5 @@
 import { BuildPanel } from '../ui/BuildPanel.js';
+import { Farmer, Fisherman, Lumberjack, Miner } from '../entities/Npc.js';
 
 export class GameScene {
   constructor(canvas, ctx, grid, renderer) {
@@ -56,6 +57,23 @@ export class GameScene {
     
     if (this.grid.cells[tile.y][tile.x] === 0) {
       this.grid.cells[tile.y][tile.x] = this.selectedBuilding;
+      
+      // Criar NPC baseado no tipo de construção
+      switch(this.selectedBuilding.type) {
+        case 'FARMER_HOUSE':
+          this.grid.addNpc(new Farmer(tile.x, tile.y));
+          break;
+        case 'FISHERMAN_HOUSE':
+          this.grid.addNpc(new Fisherman(tile.x, tile.y));
+          break;
+        case 'LUMBERJACK_HOUSE':
+          this.grid.addNpc(new Lumberjack(tile.x, tile.y));
+          break;
+        case 'MINER_HOUSE':
+          this.grid.addNpc(new Miner(tile.x, tile.y));
+          break;
+      }
+      
       this.selectedBuilding = null;
     }
   }
