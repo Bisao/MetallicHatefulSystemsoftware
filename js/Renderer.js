@@ -10,43 +10,17 @@ export class Renderer {
       [CONFIG.TILES.GRASS]: this.loadImage('attached_assets/Grass.png'),
       [CONFIG.TILES.GRASS_1]: this.loadImage('attached_assets/Grass_1.png'),
       [CONFIG.TILES.GRASS_2_FLOWERS]: this.loadImage('attached_assets/Grass_2_Flowers.png'),
-      [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png'),
-      [CONFIG.TILES.TREE_1]: this.loadImage('attached_assets/tree1.png'),
-      [CONFIG.TILES.TREE_2]: this.loadImage('attached_assets/tree2.png'),
-      [CONFIG.TILES.TREE_3]: this.loadImage('attached_assets/tree3.png'),
-      [CONFIG.TILES.STUMP_1]: this.loadImage('attached_assets/stump1.png'),
-      [CONFIG.TILES.STUMP_2]: this.loadImage('attached_assets/stump2.png'),
-      [CONFIG.TILES.LOG]: this.loadImage('attached_assets/log.png')
+      [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png')
     };
     
     // Criar mapa de tiles consistente
     this.tileMap = Array(CONFIG.GRID.SIZE).fill().map(() => 
       Array(CONFIG.GRID.SIZE).fill().map(() => {
         const rand = Math.random();
-        // Distribuição natural:
-        // 60% grama (diferentes tipos)
-        // 30% árvores
-        // 10% troncos/tocos
-        if (rand < 0.6) {
-          // Distribuição da grama
-          const grassRand = Math.random();
-          if (grassRand < 0.4) return CONFIG.TILES.GRASS;
-          if (grassRand < 0.75) return CONFIG.TILES.GRASS_1;
-          if (grassRand < 0.9) return CONFIG.TILES.GRASS_2_FLOWERS;
-          return CONFIG.TILES.GRASS_3_FLOWERS;
-        } else if (rand < 0.9) {
-          // Distribuição das árvores
-          const treeRand = Math.random();
-          if (treeRand < 0.33) return CONFIG.TILES.TREE_1;
-          if (treeRand < 0.66) return CONFIG.TILES.TREE_2;
-          return CONFIG.TILES.TREE_3;
-        } else {
-          // Distribuição dos troncos/tocos
-          const stumpRand = Math.random();
-          if (stumpRand < 0.4) return CONFIG.TILES.STUMP_1;
-          if (stumpRand < 0.7) return CONFIG.TILES.STUMP_2;
-          return CONFIG.TILES.LOG;
-        }
+        if (rand < 0.4) return CONFIG.TILES.GRASS;
+        if (rand < 0.7) return CONFIG.TILES.GRASS_1;
+        if (rand < 0.85) return CONFIG.TILES.GRASS_2_FLOWERS;
+        return CONFIG.TILES.GRASS_3_FLOWERS;
       })
     );
   }
