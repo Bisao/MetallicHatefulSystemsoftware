@@ -60,6 +60,9 @@ export class Renderer {
 
   loadImage(src) {
     const img = new Image();
+    img.onerror = () => {
+      console.error(`Erro ao carregar imagem: ${src}`);
+    };
     img.src = src;
     return img;
   }
@@ -72,14 +75,18 @@ export class Renderer {
     const tileType = this.tileMap[y][x];
     const img = this.tileImages[tileType];
     
-    if (img.complete) {
-      this.ctx.drawImage(
-        img,
-        offsetX + iso.x - this.tileSize/2,
-        offsetY + iso.y - this.tileSize/4,
-        this.tileSize,
-        this.tileSize
-      );
+    try {
+      if (img && img.complete && img.naturalHeight !== 0) {
+        this.ctx.drawImage(
+          img,
+          offsetX + iso.x - this.tileSize/2,
+          offsetY + iso.y - this.tileSize/4,
+          this.tileSize,
+          this.tileSize
+        );
+      }
+    } catch (error) {
+      console.error('Erro ao desenhar tile:', error);
     }
   }
 
