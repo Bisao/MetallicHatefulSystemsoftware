@@ -20,6 +20,8 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #buildButton {
@@ -45,11 +47,15 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
+  padding: clamp(10px, 3vw, 20px);
   border-radius: 10px;
   display: none;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  max-width: 90vw;
+  width: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+  gap: clamp(5px, 2vw, 10px);
   z-index: 999;
   box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
@@ -87,9 +93,10 @@ body {
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
-  padding: 20px;
-  min-width: 300px;
-  max-width: 90vw;
+  padding: clamp(10px, 3vw, 20px);
+  width: clamp(280px, 90vw, 400px);
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   pointer-events: auto;
