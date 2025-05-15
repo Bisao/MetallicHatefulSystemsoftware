@@ -9,6 +9,7 @@ export class GameScene {
     this.grid = grid;
     this.renderer = renderer;
     this.buildPanel = new BuildPanel();
+    this.infoPanel = new InfoPanel();
     this.selectedBuilding = null;
     this.hoverTile = null;
     document.getElementById('buildButton').style.visibility = 'visible';
@@ -88,16 +89,16 @@ export class GameScene {
       // Verificar se clicou em um NPC
       const npcs = this.grid.getNpcsAt(tile.x, tile.y);
       if (npcs.length > 0) {
-        const infoPanel = new InfoPanel();
-        infoPanel.show(npcs[0]);
+        this.infoPanel.show(npcs[0]);
         return;
       }
 
       // Verificar se clicou em uma construção
       const building = this.grid.cells[tile.y][tile.x];
       if (building !== 0) {
-        const infoPanel = new InfoPanel();
-        infoPanel.show(building);
+        this.infoPanel.show(building);
+      } else {
+        this.infoPanel.hide();
       }
     }
   }
