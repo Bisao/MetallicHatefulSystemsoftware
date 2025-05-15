@@ -37,6 +37,13 @@ export class Game {
       () => console.log('Settings clicked')
     );
 
+    this.buildButton = document.getElementById('buildButton');
+    this.buildPanel = document.getElementById('buildPanel');
+    
+    // Esconder os elementos inicialmente
+    this.buildButton.style.display = 'none';
+    this.buildPanel.style.display = 'none';
+    
     this.bindEvents();
     this.render();
   }
@@ -55,16 +62,13 @@ export class Game {
       this.scene.handleClick(x, y);
     });
 
-    const buildButton = document.getElementById('buildButton');
-    const buildPanel = document.getElementById('buildPanel');
-    
-    buildButton.addEventListener('click', () => {
-      buildPanel.style.display = buildPanel.style.display === 'grid' ? 'none' : 'grid';
+    this.buildButton.addEventListener('click', () => {
+      this.buildPanel.style.display = this.buildPanel.style.display === 'grid' ? 'none' : 'grid';
     });
 
     document.addEventListener('click', (e) => {
-      if (!buildPanel.contains(e.target) && e.target !== buildButton) {
-        buildPanel.style.display = 'none';
+      if (!this.buildPanel.contains(e.target) && e.target !== this.buildButton) {
+        this.buildPanel.style.display = 'none';
       }
     });
 
@@ -74,7 +78,7 @@ export class Game {
         const buildingType = item.dataset.building;
         console.log('Selected building:', buildingType);
         // Aqui você pode implementar a lógica para colocar a estrutura no grid
-        buildPanel.style.display = 'none';
+        this.buildPanel.style.display = 'none';
       });
     });
   }
@@ -92,12 +96,18 @@ export class Game {
     this.renderer.clear();
 
     if (this.isPlaying) {
+      // Mostrar botão de estruturas quando estiver no grid
+      this.buildButton.style.display = 'block';
+      
       for(let y = 0; y < CONFIG.GRID.SIZE; y++) {
         for(let x = 0; x < CONFIG.GRID.SIZE; x++) {
           this.renderer.drawTile(x, y);
         }
       }
     } else {
+      // Esconder botão de estruturas quando estiver no menu
+      this.buildButton.style.display = 'none';
+      this.buildPanel.style.display = 'none';
       this.scene.render();
     }
 
