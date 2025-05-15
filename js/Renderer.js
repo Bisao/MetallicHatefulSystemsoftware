@@ -12,6 +12,22 @@ export class Renderer {
       [CONFIG.TILES.GRASS_2_FLOWERS]: this.loadImage('attached_assets/Grass_2_Flowers.png'),
       [CONFIG.TILES.GRASS_3_FLOWERS]: this.loadImage('attached_assets/Grass_3_Flowers.png')
     };
+    
+    // Criar mapa de tiles consistente
+    this.tileMap = Array(CONFIG.GRID.SIZE).fill().map(() => 
+      Array(CONFIG.GRID.SIZE).fill().map(() => {
+        // Distribuição natural:
+        // 40% grama básica
+        // 35% grama variação 1
+        // 15% grama com 2 flores
+        // 10% grama com 3 flores
+        const rand = Math.random();
+        if (rand < 0.4) return CONFIG.TILES.GRASS;
+        if (rand < 0.75) return CONFIG.TILES.GRASS_1;
+        if (rand < 0.9) return CONFIG.TILES.GRASS_2_FLOWERS;
+        return CONFIG.TILES.GRASS_3_FLOWERS;
+      })
+    );
   }
 
   toIsometric(x, y) {
@@ -32,7 +48,7 @@ export class Renderer {
     const offsetX = this.canvas.width / 2;
     const offsetY = 100;
     
-    const tileType = Math.floor(Math.random() * 4); // Random tile for demonstration
+    const tileType = this.tileMap[y][x];
     const img = this.tileImages[tileType];
     
     if (img.complete) {
