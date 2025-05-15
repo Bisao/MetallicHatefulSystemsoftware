@@ -1,10 +1,11 @@
+import { PROFESSIONS } from './Professions.js';
 
 export class Npc {
   constructor(x, y, type) {
     this.x = x;
     this.y = y;
     this.type = type;
-    this.profession = '';
+    this.profession = PROFESSIONS[type];
     this.state = 'idle';
     this.direction = Math.random() * Math.PI * 2;
     this.speed = 0.02;
