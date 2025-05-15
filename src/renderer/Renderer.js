@@ -73,7 +73,9 @@ export class Renderer {
       ]
     };
 
-    const tileImage = await this.loadImage(tileImages[Math.floor(Math.random() * tileImages.length)]);
+    // Usar hash da posição para garantir mesmo tile
+    const hash = (x * 12345 + y * 67890) % tileImages.length;
+    const tileImage = await this.loadImage(tileImages[hash]);
 
     this.ctx.save();
     try {
