@@ -1,4 +1,5 @@
 import { BuildPanel } from '../ui/BuildPanel.js';
+import { InfoPanel } from '../ui/InfoPanel.js';
 import { Farmer, Fisherman, Lumberjack, Miner } from '../entities/Npc.js';
 
 export class GameScene {
