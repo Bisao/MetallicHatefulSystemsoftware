@@ -18,10 +18,26 @@ export class Scene {
   }
 
   drawButton(button) {
-    this.ctx.fillStyle = '#4CAF50';
-    this.ctx.fillRect(button.x, button.y, button.width, button.height);
+    // Sombra do botão
+    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    this.ctx.shadowBlur = 10;
+    this.ctx.shadowOffsetY = 5;
     
-    this.ctx.font = '24px Arial';
+    // Gradiente do botão
+    const gradient = this.ctx.createLinearGradient(button.x, button.y, button.x, button.y + button.height);
+    gradient.addColorStop(0, '#4CAF50');
+    gradient.addColorStop(1, '#45a049');
+    
+    this.ctx.fillStyle = gradient;
+    this.ctx.beginPath();
+    this.ctx.roundRect(button.x, button.y, button.width, button.height, 10);
+    this.ctx.fill();
+    
+    // Resetar sombra
+    this.ctx.shadowColor = 'transparent';
+    
+    // Texto do botão
+    this.ctx.font = 'bold 24px Arial';
     this.ctx.fillStyle = '#fff';
     this.ctx.textAlign = 'center';
     this.ctx.fillText(
@@ -29,6 +45,16 @@ export class Scene {
       button.x + button.width / 2,
       button.y + button.height / 2 + 8
     );
+  }
+
+  drawText(text, x, y, size = '48px') {
+    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    this.ctx.shadowBlur = 15;
+    this.ctx.font = `bold ${size} Arial`;
+    this.ctx.fillStyle = '#fff';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText(text, x, y);
+    this.ctx.shadowColor = 'transparent';
   }
 
   render() {

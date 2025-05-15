@@ -25,10 +25,27 @@ export class Renderer {
     this.ctx.lineTo(offsetX + iso.x - this.tileSize, offsetY + iso.y + this.tileSize / 2);
     this.ctx.closePath();
     
-    this.ctx.strokeStyle = '#000';
+    // Gradiente do tile
+    const gradient = this.ctx.createLinearGradient(
+      offsetX + iso.x, 
+      offsetY + iso.y,
+      offsetX + iso.x,
+      offsetY + iso.y + this.tileSize
+    );
+    gradient.addColorStop(0, '#f0f0f0');
+    gradient.addColorStop(1, '#e0e0e0');
+    
+    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    this.ctx.shadowBlur = 5;
+    this.ctx.shadowOffsetY = 2;
+    
+    this.ctx.strokeStyle = '#ccc';
+    this.ctx.lineWidth = 1;
     this.ctx.stroke();
-    this.ctx.fillStyle = '#eee';
+    this.ctx.fillStyle = gradient;
     this.ctx.fill();
+    
+    this.ctx.shadowColor = 'transparent';
   }
 
   clear() {
