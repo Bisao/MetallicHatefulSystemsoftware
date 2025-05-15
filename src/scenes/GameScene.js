@@ -60,31 +60,45 @@ export class GameScene {
   }
 
   handleClick(x, y) {
-    if (!this.selectedBuilding) return;
-
     const tile = this.renderer.getTileFromScreen(x, y);
     if (!tile) return;
 
-    if (this.grid.cells[tile.y][tile.x] === 0) {
-      this.grid.cells[tile.y][tile.x] = this.selectedBuilding;
+    if (this.selectedBuilding) {
+      if (this.grid.cells[tile.y][tile.x] === 0) {
+        this.grid.cells[tile.y][tile.x] = this.selectedBuilding;
 
-      // Criar NPC baseado no tipo de construção
-      switch(this.selectedBuilding.type) {
-        case 'FARMER_HOUSE':
-          this.grid.addNpc(new Farmer(tile.x, tile.y));
-          break;
-        case 'FISHERMAN_HOUSE':
-          this.grid.addNpc(new Fisherman(tile.x, tile.y));
-          break;
-        case 'LUMBERJACK_HOUSE':
-          this.grid.addNpc(new Lumberjack(tile.x, tile.y));
-          break;
-        case 'MINER_HOUSE':
-          this.grid.addNpc(new Miner(tile.x, tile.y));
-          break;
+        // Criar NPC baseado no tipo de construção
+        switch(this.selectedBuilding.type) {
+          case 'FARMER_HOUSE':
+            this.grid.addNpc(new Farmer(tile.x, tile.y));
+            break;
+          case 'FISHERMAN_HOUSE':
+            this.grid.addNpc(new Fisherman(tile.x, tile.y));
+            break;
+          case 'LUMBERJACK_HOUSE':
+            this.grid.addNpc(new Lumberjack(tile.x, tile.y));
+            break;
+          case 'MINER_HOUSE':
+            this.grid.addNpc(new Miner(tile.x, tile.y));
+            break;
+        }
+        this.selectedBuilding = null;
+      }
+    } else {
+      // Verificar se clicou em um NPC
+      const npcs = this.grid.getNpcsAt(tile.x, tile.y);
+      if (npcs.length > 0) {
+        const infoPanel = new InfoPanel();
+        infoPanel.show(npcs[0]);
+        return;
       }
 
-      this.selectedBuilding = null;
+      // Verificar se clicou em uma construção
+      const building = this.grid.cells[tile.y][tile.x];
+      if (building !== 0) {
+        const infoPanel = new InfoPanel();
+        infoPanel.show(building);
+      }
     }
   }
 }
