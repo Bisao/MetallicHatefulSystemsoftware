@@ -1,3 +1,4 @@
+
 import { BuildPanel } from '../ui/BuildPanel.js';
 import { Farmer, Fisherman, Lumberjack, Miner } from '../entities/Npc.js';
 import { InfoPanel } from '../ui/InfoPanel.js';
@@ -16,8 +17,29 @@ export class GameScene {
       lastUpdate: Date.now()
     };
     document.getElementById('buildButton').style.visibility = 'visible';
-    
     this.bindEvents();
+  }
+
+  bindEvents() {
+    document.addEventListener('buildingSelected', (e) => {
+      this.state.selectedBuilding = e.detail;
+    });
+
+    this.canvas.addEventListener('mousemove', (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      this.state.hoverTile = this.renderer.getTileFromScreen(mouseX, mouseY);
+    });
+  }
+
+  update() {
+    const now = Date.now();
+    const deltaTime = (now - this.state.lastUpdate) / 1000;
+    this.state.lastUpdate = now;
+
+    // Update NPCs with deltaTime
+    this.grid.npcs.forEach(npc => npc.update(deltaTime));
   }
 
   render() {
@@ -53,53 +75,17 @@ export class GameScene {
       this.renderer.drawNpc(npc);
     });
   }
-    this.canvas = canvas;
-    this.ctx = ctx;
-    this.grid = grid;
-    this.renderer = renderer;
-    this.buildPanel = new BuildPanel();
-    this.infoPanel = new InfoPanel();
-    this.state = {
-      selectedBuilding: null,
-      hoverTile: null,
-      lastUpdate: Date.now()
-    };
-    
-    this.bindEvents();
-  }
-
-  bindEvents() {
-    document.addEventListener('buildingSelected', (e) => {
-      this.state.selectedBuilding = e.detail;
-    });
-
-    this.canvas.addEventListener('mousemove', (e) => {
-      const rect = this.canvas.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      this.state.hoverTile = this.renderer.getTileFromScreen(mouseX, mouseY);
-    });
-  }
-
-  update() {
-    const now = Date.now();
-    const deltaTime = (now - this.state.lastUpdate) / 1000;
-    this.state.lastUpdate = now;
-
-    // Update NPCs with deltaTime
-    this.grid.npcs.forEach(npc => npc.update(deltaTime));
-  }
 
   handleClick(x, y) {
     const tile = this.renderer.getTileFromScreen(x, y);
     if (!tile || !this.grid.isValidPosition(tile.x, tile.y)) return;
 
-    if (this.selectedBuilding) {
+    if (this.state.selectedBuilding) {
       if (this.grid.cells[tile.y][tile.x] === 0) {
-        this.grid.cells[tile.y][tile.x] = this.selectedBuilding;
+        this.grid.cells[tile.y][tile.x] = this.state.selectedBuilding;
 
         // Criar NPC baseado no tipo de construção
-        switch(this.selectedBuilding.type) {
+        switch(this.state.selectedBuilding.type) {
           case 'FARMER_HOUSE':
             this.grid.addNpc(new Farmer(tile.x, tile.y, 'FARMER', {x: tile.x, y: tile.y}));
             break;
@@ -113,7 +99,7 @@ export class GameScene {
             this.grid.addNpc(new Miner(tile.x, tile.y, 'MINER', {x: tile.x, y: tile.y}));
             break;
         }
-        this.selectedBuilding = null;
+        this.state.selectedBuilding = null;
       }
     } else {
       // Verificar se clicou em um NPC
